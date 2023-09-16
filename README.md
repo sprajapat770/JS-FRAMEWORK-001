@@ -6,3 +6,5 @@
     Rendering (render display content on window)-> View
     Data Handling (Set Data to view) -> Model
     Event Handling -> Controller
+
+### first index page rendered
