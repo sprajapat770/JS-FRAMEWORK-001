@@ -76,3 +76,7 @@
             - docker compose exec app npm init -y 
         - install express package (not required)
             - docker compose exec app npm i express
+
+### server running
+    docker compose exec app node server.js
+    open in browser window localhost:3000
