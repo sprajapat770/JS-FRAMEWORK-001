@@ -38,7 +38,7 @@
                 working_dir: /app # Set the working directory in the container
                 command: tail -f /dev/null
         
-        - run command: docker exec -it js_web_container /bin/bash
+        - run command: docker exec -it app_container /bin/bash
         - run command: npm init -y
             - it will generate package.json file
         - run command: npm i express
