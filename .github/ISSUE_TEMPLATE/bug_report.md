@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: 'Issue: Ready For Confirmation'
+labels: 'Feature Request, Issue: Ready For Confirmation'
 assignees: sprajapat770
 
 ---
