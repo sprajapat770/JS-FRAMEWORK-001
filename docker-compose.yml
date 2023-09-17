@@ -1,0 +1,11 @@
+version: '3'
+services:
+  app:
+    image: node:16 # You can specify a different Node.js version if needed
+    container_name: app_container # You can change the container name
+    volumes:
+      - ./:/app # Mount your local app directory into the container
+    ports:
+      - "5060:5060" # Map the container's port 3000 to the host's port 3000
+    working_dir: /app # Set the working directory in the container
+    command: tail -f /dev/null
