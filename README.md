@@ -26,19 +26,45 @@
     create docker-compose.yml file
         - touch docker-compose.yml
         - add below content
-            version: '3'
+            version: '3.8'
             services:
-            app:
-                image: node:14 # You can specify a different Node.js version if needed
-                container_name: app_container # You can change the container name
-                volumes:
-                - ./:/app # Mount your local app directory into the container
-                ports:
-                - "3000:3000" # Map the container's port 3000 to the host's port 3000
-                working_dir: /app # Set the working directory in the container
-                command: tail -f /dev/null
+                app:
+                    build:
+                    context: ./
+                    target: dev
+                    volumes:
+                    - .:/src
+                    command: npm run start:dev
+                    ports:
+                    - "3000:3000"
+                    environment:
+                    NODE_ENV: development
+                    DEBUG: nodejs-docker-express:*
+        - touch Dockerfile
+        - add below content
+            FROM node:16-alpine as base
+
+            WORKDIR /src
+            COPY package*.json /
+            EXPOSE 3000
+
+            FROM base as production
+            ENV NODE_ENV=production
+            RUN npm ci
+            COPY . /
+            CMD ["node", "bin/www"]
+
+            FROM base as dev
+            ENV NODE_ENV=development
+            RUN npm install -g nodemon && npm install && npm init -y && npm i express
+            COPY . /
+            CMD ["nodemon", "bin/www"]
         
-        - run command: docker exec -it app_container /bin/bash
+        - touch .dockerignore
+        - add below content
+            .git
+            node_modules
+        - run command & check container name: docker ps
         - run command: npm init -y
             - it will generate package.json file
         - run command: npm i express
@@ -46,3 +72,7 @@
 
         - direct command to access docker information or run command inside docker container
             - docker compose exec app npm -v
+        - generate package.json file (not required)
+            - docker compose exec app npm init -y 
+        - install express package (not required)
+            - docker compose exec app npm i express
