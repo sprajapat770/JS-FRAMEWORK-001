@@ -10,5 +10,5 @@ app.get("/*", (req, res) => {
 
 console.log('running service file');
 
-app.listen(3000, () => console.log('server running....'));
+app.listen(process.env.PORT || 3000, () => console.log('server running....'));
 
